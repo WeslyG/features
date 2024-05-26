@@ -1,6 +1,6 @@
 {
     "name": "Hashicorp direct install from mirror",
-    "id": "hashicorp-direct-install-from-mirror",
+    "id": "hashicorp-mirror",
     "version": "1.0.0",
     "description": "Download hashicorp product from any mirror you like (support x86/arm aarch)",
     "options": {
