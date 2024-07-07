@@ -17,21 +17,19 @@ $nanolayer_location \
     --option packages='curl,ca-certificates,unzip'
 
 IFS=','
-uname_output=$(uname -m)
+echo "uname -m = $(uname -m)"
 
-
-# example 
-# PRODUCT=vault=1.7.0,terraform=4.2.8
-
+# example
+# PRODUCTS=vault=1.7.0,terraform=4.2.8
 for product in $PRODUCTS; do
     IFS='='
     read -r PRODUCT VERSION <<< "$product"
 
-    if [[ uname_output == "x86_64" || uname_output == "amd" || uname_output == "amd64" ]]; then
+    if [[ $(uname -m) == "x86_64" || $(uname -m) == "amd" || $(uname -m) == "amd64" ]]; then
         curl -Lo binary.zip https://${MIRROR}/${PRODUCT}/${VERSION}/${PRODUCT}_${VERSION}_linux_amd64.zip
-    elif [[ uname_output == "arm64" || uname_output == "aarch64" ]]; then
+    elif [[ $(uname -m) == "arm64" || $(uname -m) == "aarch64" ]]; then
         curl -Lo binary.zip https://${MIRROR}/${PRODUCT}/${VERSION}/${PRODUCT}_${VERSION}_linux_arm64.zip
-    elif [[ uname_output == "arm" ]]; then
+    elif [[ $(uname -m) == "arm" ]]; then
         curl -Lo binary.zip https://${MIRROR}/${PRODUCT}/${VERSION}/${PRODUCT}_${VERSION}_linux_arm.zip
     else
         echo "Unsupported architecture"
