@@ -19,19 +19,26 @@ $nanolayer_location \
 IFS=','
 uname_output=$(uname -m)
 
+
+# example 
+# PRODUCT=vault=1.7.0,terraform=4.2.8
+
 for product in $PRODUCTS; do
+    IFS='='
+    read -r PRODUCT VERSION <<< "$product"
+
     if [[ uname_output == "x86_64" || uname_output == "amd" || uname_output == "amd64" ]]; then
-        curl -Lo binary.zip https://${MIRROR}/${PRODUCTS}/${VERSION}/${PRODUCTS}_${VERSION}_linux_amd64.zip
+        curl -Lo binary.zip https://${MIRROR}/${PRODUCT}/${VERSION}/${PRODUCT}_${VERSION}_linux_amd64.zip
     elif [[ uname_output == "arm64" || uname_output == "aarch64" ]]; then
-        curl -Lo binary.zip https://${MIRROR}/${PRODUCTS}/${VERSION}/${PRODUCTS}_${VERSION}_linux_arm64.zip
+        curl -Lo binary.zip https://${MIRROR}/${PRODUCT}/${VERSION}/${PRODUCT}_${VERSION}_linux_arm64.zip
     elif [[ uname_output == "arm" ]]; then
-        curl -Lo binary.zip https://${MIRROR}/${PRODUCTS}/${VERSION}/${PRODUCTS}_${VERSION}_linux_arm.zip
+        curl -Lo binary.zip https://${MIRROR}/${PRODUCT}/${VERSION}/${PRODUCT}_${VERSION}_linux_arm.zip
     else
         echo "Unsupported architecture"
         exit 1
     fi
 
-    unzip binary.zip ${PRODUCTS}
-    install ${PRODUCTS} /usr/local/bin
-    rm -rf binary.zip ${PRODUCTS}
+    unzip binary.zip ${PRODUCT}
+    install ${PRODUCT} /usr/local/bin
+    rm -rf binary.zip ${PRODUCT}
 done

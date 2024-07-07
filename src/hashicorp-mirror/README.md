@@ -7,7 +7,7 @@ Download hashicorp product from any mirror you like (support x86/arm aarch)
 
 ```json
 "features": {
-    "ghcr.io/WeslyG/features/hashicorp-mirror:1": {}
+    "ghcr.io/WeslyG/features/hashicorp-mirror:2": {}
 }
 ```
 
@@ -15,10 +15,8 @@ Download hashicorp product from any mirror you like (support x86/arm aarch)
 
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
-| version | hashicorp product version | string | 1.8.4 |
 | mirror | Set hashicorp mirror link | string | hashicorp-releases.yandexcloud.net |
-| product | Set hashicorp product name from mirror (for example https://hashicorp-releases.yandexcloud.net) | string | terraform |
-
+| products | Set hashicorp product name from mirror (for example https://hashicorp-releases.yandexcloud.net) | string | terraform |
 
 
 ---

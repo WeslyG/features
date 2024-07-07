@@ -1,14 +1,9 @@
 {
     "name": "Hashicorp direct install from mirror",
     "id": "hashicorp-mirror",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Download hashicorp product from any mirror you like (support x86/arm aarch)",
     "options": {
-        "version": {
-            "type": "string",
-            "default": "1.8.4",
-            "description": "hashicorp product version"
-        },
         "mirror": {
             "type": "string",
             "default": "hashicorp-releases.yandexcloud.net",
@@ -17,10 +12,10 @@
         "products": {
             "type": "string",
             "proposals": [
-                "packer,terraform,vault",
-                "envoy",
-                "consul",
-                "vault"
+                "packer=1.2.3,terraform=4.2.1,vault=1.7.0",
+                "envoy=1.0.0",
+                "consul=2.3.7",
+                "vault=1.4.2"
             ],
             "default": "terraform",
             "description": "Set hashicorp product name with ',' for list installed from mirror (for example https://hashicorp-releases.yandexcloud.net)"
