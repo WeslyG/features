@@ -10,25 +10,28 @@ source ./library_scripts.sh
 # of the script
 ensure_nanolayer nanolayer_location "v0.5.6"
 
-
 $nanolayer_location \
     install \
     devcontainer-feature \
     "ghcr.io/devcontainers-contrib/features/apt-get-packages:1.0.6" \
     --option packages='curl,ca-certificates,unzip'
 
+IFS=','
 uname_output=$(uname -m)
-if [[ $(uname -m) == "x86_64" ]]; then
-    curl -Lo product.zip https://${MIRROR}/${PRODUCT}/${VERSION}/${PRODUCT}_${VERSION}_linux_amd64.zip
-elif [[ $(uname -m) == "arm64" || $(uname -m) == "aarch64" ]]; then
-    curl -Lo product.zip https://${MIRROR}/${PRODUCT}/${VERSION}/${PRODUCT}_${VERSION}_linux_arm64.zip
-elif [[ $(uname -m) == "amd" ]]; then
-    curl -Lo product.zip https://${MIRROR}/${PRODUCT}/${VERSION}/${PRODUCT}_${VERSION}_linux_arm.zip
-else
-    echo "Unsupported architecture"
-    exit 1
-fi
 
-unzip product.zip ${PRODUCT}
-install ${PRODUCT} /usr/local/bin
-rm -rf product.zip ${PRODUCT}
+for product in $PRODUCTS; do
+    if [[ uname_output == "x86_64" || uname_output == "amd" || uname_output == "amd64" ]]; then
+        curl -Lo binary.zip https://${MIRROR}/${PRODUCTS}/${VERSION}/${PRODUCTS}_${VERSION}_linux_amd64.zip
+    elif [[ uname_output == "arm64" || uname_output == "aarch64" ]]; then
+        curl -Lo binary.zip https://${MIRROR}/${PRODUCTS}/${VERSION}/${PRODUCTS}_${VERSION}_linux_arm64.zip
+    elif [[ uname_output == "arm" ]]; then
+        curl -Lo binary.zip https://${MIRROR}/${PRODUCTS}/${VERSION}/${PRODUCTS}_${VERSION}_linux_arm.zip
+    else
+        echo "Unsupported architecture"
+        exit 1
+    fi
+
+    unzip binary.zip ${PRODUCTS}
+    install ${PRODUCTS} /usr/local/bin
+    rm -rf binary.zip ${PRODUCTS}
+done
